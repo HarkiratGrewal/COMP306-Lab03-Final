@@ -3,14 +3,33 @@
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var movie = this.Model;
 }
 
-<h1>Details</h1>
+@*<h1>Details</h1>*@
 
 <div>
-    <h4>Movies</h4>
+    <h4>@Html.DisplayFor(model => model.Name)</h4>
     <hr />
-    <dl class="row">
+    <div class="align-content-center">
+        <iframe class="embed-responsive-item" scrolling="no" title="@movie.Name" src="@movie.Url" allowfullscreen></iframe>
+    </div>
+    <hr />
+
+
+    <!--<div class="align-content-center">
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Url)
+            </dt>
+            <dd class="col-sm-10">
+                Download-->
+                @*@Html.DisplayFor(model => model.Url)*@
+            <!--</dd>
+        </dl>
+    </div>-->
+
+    <!--<dl class="row">
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
@@ -20,8 +39,9 @@
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Url)
         </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Url)
+        <dd class="col-sm-10">-->
+            @*@Html.DisplayFor(model => model.Url)*@
+            <!--<iframe class="embed-responsive-item" scrolling="no" title="@movie.Name" src="@movie.Url" allowfullscreen></iframe>
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Rating)
@@ -35,9 +55,10 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Comments)
         </dd>
-    </dl>
+    </dl>-->
+
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    @*<a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |*@
     <a asp-action="Index">Back to List</a>
 </div>

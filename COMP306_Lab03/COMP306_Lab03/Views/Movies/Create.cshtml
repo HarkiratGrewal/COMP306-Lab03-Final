@@ -1,4 +1,4 @@
-﻿@model COMP306_Lab03.Models.Movies
+﻿@model COMP306_Lab03.Models.MoviesView
 
 @{
     ViewData["Title"] = "Create";
@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form enctype="multipart/form-data" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -34,8 +34,10 @@
                 <span asp-validation-for="Comments" class="text-danger"></span>
             </div>
             <div class="form-inline">
-                @*<label asp-for="Url" class="control-label">Upload</label>*@
-                <a asp-action="Upload" class="nav-item nav-link">Upload</a>
+                @*<label asp-for="file" class="control-label">Upload</label>
+                  <a asp-action="Upload" class="nav-item nav-link">Upload</a>*@
+                <label asp-for="file" for="doc" class="" data-browse="Browse" lang="es"></label>
+                <input asp-for="file" type="file" class="form-control-file" id="doc" name="document" required accept="video/*" />
             </div>
             <div class="form-group">
                 <br />

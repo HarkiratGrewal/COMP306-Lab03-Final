@@ -63,15 +63,59 @@ namespace COMP306_Lab03.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Url,Rating,Comments")] Movies movies)
+        public async Task<IActionResult> Create(MoviesView model, IFormFile document)  // [Bind("Id,Name,Url,Rating,Comments")] 
         {
             if (ModelState.IsValid)
             {
-                _context.Add(movies);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                bool isUploadSuccess = false;
+                if (document != null)
+                {
+
+                    Stream stream = document.OpenReadStream();
+                    S3Upload s3 = new S3Upload();
+                    isUploadSuccess = await s3.UploadDocument(stream, document.FileName);
+                    Movies movie = new Movies
+                    {
+                        Name = model.Name,
+                        Comments = model.Comments,
+                        Rating = model.Rating,
+                        //Url = "https://comp306-lab03.s3.us-east-1.amazonaws.com/" + document.FileName.Replace(" ", "+"),
+                        Url = "https://s3.us-east-1.amazonaws.com/comp306-lab03/" + document.FileName.Replace(" ", "+")
+                    };
+
+
+                    //dynamoService.Store(movie);
+                    //await stream.DisposeAsync();
+                    _context.Add(movie);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+
+                }
+                else
+                {
+                    return BadRequest("Please select file to upload");
+                }
+
+                #region UploadMessage
+                /*
+                if (isUploadSuccess)
+                {
+
+                    this.TempData["message"] = "Success!";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Error occurred" });
+                }
+                */
+                #endregion
+
+                //_context.Add(movies);
+                //await _context.SaveChangesAsync();
+                //return RedirectToAction(nameof(Index));
             }
-            return View(movies);
+            return View();
         }
 
         // GET: Movies/Edit/5

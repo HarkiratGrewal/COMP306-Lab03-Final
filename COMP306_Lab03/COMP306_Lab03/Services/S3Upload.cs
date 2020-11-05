@@ -13,12 +13,12 @@ namespace COMP306_Lab03.Services
 {
     public class S3Upload
     {
-        private const string bucketName = "moviesnet";
-        private const string accessKey = "";
-        private const string secretKey = "";
+        private const string bucketName = "comp306-lab03";
+        private const string accessKey = "AKIAIYDXPTXS5C5H44QA";
+        private const string secretKey = "4FhhdkOyeM1LFBHEA0+Dl4Q53N7PgXnbmXEgjoxv";
 
         // Specify your bucket region here
-        private static readonly RegionEndpoint bucketRegion = RegionEndpoint.USEast2;
+        private static readonly RegionEndpoint bucketRegion = RegionEndpoint.USEast1;
         private static IAmazonS3 s3Client;
 
 
@@ -35,7 +35,7 @@ namespace COMP306_Lab03.Services
                     BucketName = bucketName,
                     InputStream = stream,
                     StorageClass = S3StorageClass.Standard,
-                    CannedACL = S3CannedACL.Private,
+                    CannedACL = S3CannedACL.PublicReadWrite,
                     PartSize = partSize,
                     Key = fileName
                 };
